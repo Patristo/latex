@@ -33,3 +33,11 @@ def test_jinja2_newline_escape_no_folding():
     env = make_env(loader=DictLoader({'template.tex': in_template}))
     template = env.get_template('template.tex')
     assert out == template.render(name='Michael \n\n\nPalin')
+
+
+def test_jinja2_newline_escape_newline_token():
+    in_template = r'Hello \VAR{name | e(use_newline_token=true)}!'
+    out = 'Hello Michael \\newline%\nPalin!'
+    env = make_env(loader=DictLoader({'template.tex': in_template}))
+    template = env.get_template('template.tex')
+    assert out == template.render(name='Michael \n\n\nPalin')
